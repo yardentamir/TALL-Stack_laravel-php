@@ -7,11 +7,8 @@ use Livewire\Component;
 class Select extends Component
 {
     public $items;
-
     public $selected = null;
-  
     public $label;
-  
     public $open = false;
   
     public function toggle()

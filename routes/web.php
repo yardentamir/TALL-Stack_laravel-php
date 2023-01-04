@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    Debugbar::info('in welcome page'); // (message)
+    Debugbar::startMeasure('wohoo', 'renderWelcomePage'); // check time to render the welcome page (timeline)
     return view('welcome');
 });
 

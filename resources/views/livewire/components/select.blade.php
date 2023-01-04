@@ -49,13 +49,13 @@
             <ul class="bg-white absolute mt-1 z-10 border rounded-lg w-full">
                 @foreach ($items as $item)
                     <li wire:click="select({{ $loop->index }})" @class([
-                        'px-3 py-2 cursor-pointer flex items-center justify-between',
+                        'px-3 py-2 cursor-pointer flex items-center justify-between rounded',
                         'bg-blue-500 text-white' => $selected === $loop->index,
                         'hover:bg-blue-400 hover:text-white',
                     ])
                         wire:click="select({{ $loop->index }})" x-data="{ index: {{ $loop->index }} }"
                         class="px-3 py-2 cursor-pointer flex items-center justify-between"
-                        :class="{ 'bg-blue-400 text-white': index === highlighted }" @mouseover="highlighted = index">
+                        :class="{ 'bg-blue-600 text-white': index === highlighted }" @mouseover="highlighted = index">
                         {{ $item }}
 
                         @if ($selected === $loop->index)
