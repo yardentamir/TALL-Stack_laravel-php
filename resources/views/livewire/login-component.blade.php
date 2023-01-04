@@ -1,5 +1,4 @@
 <div>
-    {{-- Stop trying to control. --}}
     <select x-data wire:model="selectedAnimal" name="animals"
         class="mt-2 text-sm sm:text-base pl-2 pr-4 rounded-lg border border-gray-400 w-80">
         <option value="" selected>Choose an Animal</option>
@@ -21,6 +20,4 @@
         </div>
         <p x-text="$wire.count" class="@if ($isCountLimit) text-red-500 @endif"></p>
     </div>
-    @livewireScripts
-    {{-- use live wire in every component --}}
 </div>
