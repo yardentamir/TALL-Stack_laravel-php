@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 
-
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        $users = User::all();
-        return view('users.index')->with('users', $users);
+        return view('post.index');
     }
 
     /**
