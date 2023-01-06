@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -13,7 +14,33 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post.index');
+        // $posts = DB::statement('SELECT * FROM `posts`');
+        // $posts = DB::select('SELECT * FROM posts WHERE id = :id', ['id' => 1]);
+        // $posts = DB::insert('INSERT INTO posts (title, excerpt, body, image_path, is_published, min_to_read) VALUES (:title, :excerpt, :body, :image_path, :is_published, :min_to_read)',['title' => 'Test', 'excerpt'=> 'TEST', 'body'=> 'TEST', 'image_path'=> 'TEST', 'is_published'=> true, 'min_to_read'=> 1]);
+        // $posts = DB::update('UPDATE posts SET body = :body WHERE id = :id', ['body' => 'Body 2', 'id' => 101]);
+        // $posts = DB::delete('DELETE FROM posts WHERE id = :id', ['id' => 101]);
+
+        // $posts = DB::table('posts')->select('title')->get(); // get only body!
+        // $posts = DB::table('posts')->where('id', '>', 50)->where('is_published',false)->get();
+        // $posts = DB::table('posts')->whereBetween('min_to_read',[2,6])->get();
+        // $posts = DB::table('posts')->whereIn('min_to_read',[2,6,8])->get();
+        // $posts = DB::table('posts')->whereNull('excerpt')->get(); // check if null
+        // $posts = DB::table('posts')->select('min_to_read')->skip(2)->take(3)->orderBy('min_to_read', 'asc')->distinct()->get(); // no duplicates and order from 1 -10 and show only 3 and skip 2 first columns
+        // $posts = DB::table('posts')->inRandomOrder()->get(); // random column order
+        // $posts = DB::table('posts')->where('id', '>', 20)->first(); // first will get one only - get is all
+        // $posts = DB::table('posts')->find(100); // based on primary key
+        // $posts = DB::table('posts')->where('id', 100)->value('body'); // gets the value from array of posts - only one
+        // $posts = DB::table('posts')->where('id', '>', 20)->count(); // counts the number of posts
+        // $posts = DB::table('posts')->min('min_to_read'); // counts the number of posts
+        // $posts = DB::table('posts')->max('min_to_read'); // counts the number of posts
+
+        // $posts = DB::table('posts')->find(1);
+        $posts = DB::table('posts')->get();
+
+        // dd($posts); // show db to screen localhost
+        // return view('post.index')->with('posts', $posts);
+        // return view('post.index',compact('posts'));
+        return view('post.index',['posts' => $posts]);
     }
 
     /**
