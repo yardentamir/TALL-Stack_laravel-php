@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -14,6 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        // ! DB queries
         // $posts = DB::statement('SELECT * FROM `posts`');
         // $posts = DB::select('SELECT * FROM posts WHERE id = :id', ['id' => 1]);
         // $posts = DB::insert('INSERT INTO posts (title, excerpt, body, image_path, is_published, min_to_read) VALUES (:title, :excerpt, :body, :image_path, :is_published, :min_to_read)',['title' => 'Test', 'excerpt'=> 'TEST', 'body'=> 'TEST', 'image_path'=> 'TEST', 'is_published'=> true, 'min_to_read'=> 1]);
@@ -35,12 +37,31 @@ class PostController extends Controller
         // $posts = DB::table('posts')->max('min_to_read'); // counts the number of posts
 
         // $posts = DB::table('posts')->find(1);
-        $posts = DB::table('posts')->get();
 
         // dd($posts); // show db to screen localhost
         // return view('post.index')->with('posts', $posts);
         // return view('post.index',compact('posts'));
-        return view('post.index',['posts' => $posts]);
+
+        // $posts = DB::table('posts')->get();
+        // return view('post.index', ['posts' => $posts]);
+
+        // ! using Modal
+        // $posts = Post::all();
+        // $posts = Post::orderBy('id', 'desc')->take(10)->get();
+        // $posts = Post::where('min_to_read', '!=', 2)->get();
+        // dd($posts); // show db to screen localhost
+
+        // Post::chunk(25, function ($posts) {
+        //     foreach ($posts as $post) {
+        //         echo $post->title . '<br>';
+        //     }
+        // });
+
+        // $posts = Post::get()->count();
+        $posts = Post::orderBy('updated_at', "desc")->get();
+        // dd($posts, ['posts' => $posts]);
+
+        return view('post.index', ['posts' => $posts]);
     }
 
     /**
@@ -50,7 +71,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view("post.partials.create");
     }
 
     /**
@@ -61,7 +82,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // $post = new Post();
+        // $post->title = $request->title;
+        // $post->excerpt = $request->excerpt;
+        // $post->body = $request->body;
+        // $post->image_path = 'temp';
+        // $post->is_published = $request->is_published === 'on';
+        // $post->min_to_read = $request->min_to_read;
+        // $post->save();
+
+        Post::create([
+            'title' => $request->title,
+            'excerpt' => $request->excerpt,
+            'body' => $request->body,
+            'image_path' => $this->storeImage($request),
+            'is_published' => $request->is_published === 'on',
+            'min_to_read' => $request->min_to_read,
+        ]);
+
+        return redirect(route('post'));
+        // return view("post.partials.create");
     }
 
     /**
@@ -72,7 +113,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('post.partials.show', ['post' => Post::findOrFail($id)]);
     }
 
     /**
@@ -107,5 +148,12 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function storeImage($request)
+    {
+        // dd($request);
+        $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
+        return $request->image->move(public_path('images'), $newImageName);
     }
 }

@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title', 'excerpt', 'body', 'image_path', 'is_published', 'min_to_read'
+    ]; // the column we want to insert
+
+    // protected $table ='posts';
+    // protected $primaryKey = 'title';
+    // protected $timestamps = false;
+    // protected $dateTime = 'U';
+    // protected $connection = 'sqlite';
+    // protected $attributes = [
+    //     'is_published' => true
+    // ];
 }

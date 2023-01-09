@@ -28,9 +28,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('/post')->group(function () {
+    Route::get('/create', [PostController::class, 'create'])->name('post.create');
     Route::get('/', [PostController::class, 'index'])->name('post');
     Route::get('/{id}', [PostController::class, 'show'])->name('post.show');
-    Route::get('/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/', [PostController::class, 'store'])->name('post.store');
     Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
     Route::patch('/', [PostController::class, 'update'])->name('post.update');
@@ -43,9 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // fallback routes
 
 Route::fallback(FallbackController::class);
-
