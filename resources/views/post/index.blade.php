@@ -5,6 +5,10 @@
         </h2>
     </x-slot>
 
+    <x-blast-demo.button style-type="primary">
+        btn component
+    </x-blast-demo.button>
+
     <div class="w-4/5 mx-auto">
         <div class="pt-20 text-center">
             <h1 class="text-3xl text-gray-700">

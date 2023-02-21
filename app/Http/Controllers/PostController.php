@@ -152,7 +152,6 @@ class PostController extends Controller
 
     private function storeImage($request)
     {
-        // dd($request);
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
         return $request->image->move(public_path('images'), $newImageName);
     }
